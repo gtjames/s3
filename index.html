@@ -7,17 +7,18 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css" id="css" >
     <style>
-	table, tr, td, th {
-	    border: 1px solid black;
-    	margin-top: 5px;
-    	padding: 28px;
-	}
+		table, tr, td, th {
+			border: 1px solid black;
+			margin-top: 5px;
+			padding: 28px;
+		}
+		
+		.changeCursor:hover { cursor: pointer; }
 	</style>
 </head>
 <body class="w3-theme-l1">
 	<div class="w3-container w3-theme w3-padding-16">
-		<!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
-		<label for="quote">New Quote</label>
+		<label for="quote">New Quote: </label>
 		<input type="text" id="quote">
 		<button id="save">Save Quote</button>
 	</div>
@@ -58,8 +59,8 @@
                     <tr class="w3-theme-${row % 2 > 0 ?"l2":"l3"}">
                         <td>${(new Date(+q.id)).toString().substring(4,24)}</td>
                         <td>${q.quote}</td>
-                        <td id="D${q.id}">Delete</td>
-                        <td id="U${q.id}">Update</td>
+                        <td id="D${q.id}" class="changeCursor">Delete</td>
+                        <td id="U${q.id}" class="changeCursor">Update</td>
                     </tr>`;
 					rows.innerHTML += tr;
 				});
