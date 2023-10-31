@@ -12,32 +12,26 @@
     	margin-top: 5px;
     	padding: 28px;
 	}
-
 	</style>
 </head>
 <body class="w3-theme-l1">
+	<div class="w3-container w3-theme w3-padding-16">
+		<!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
+		<label for="quote">New Quote</label>
+		<input type="text" id="quote">
+		<button id="save">Save Quote</button>
+	</div>
 
-<div class="w3-container w3-theme-l1">
-    <div id="menu" class="w3-bar"></div>
-</div>
-
-<div class="w3-container w3-theme w3-padding-16">
-    <!--<form action="http://kxsd87wapg.execute-api.us-east-2.amazonaws.com/dev" method="POST">-->
-    <label for="quote">New Quote</label>
-    <input type="text" id="quote">
-    <button id="save">Save Quote</button>
-</div>
-
-<div class="w3-container w3-theme-l3 w3-padding-16">
-    <table class='w3-table-all w3-theme'>
-        <thead>
-        <tr class="w3-theme-l4 w3-bordered">
-            <th>ID</th> <th>Text</th> <th>Delete</th> <th>Update</th>
-        </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-    </table>
-</div>
+	<div class="w3-container w3-theme-l3 w3-padding-16">
+		<table class='w3-table-all w3-theme'>
+			<thead>
+			<tr class="w3-theme-l4 w3-bordered">
+				<th>ID</th> <th>Text</th> <th>Delete</th> <th>Update</th>
+			</tr>
+			</thead>
+			<tbody id="rows"></tbody>
+		</table>
+	</div>
 </body>
 <script>
 	let apiURL = 'https://ulzeq46egc.execute-api.us-east-2.amazonaws.com/dev/';
@@ -79,14 +73,15 @@
 			.catch(err => console.log('Fetch Error :', err) );
 	}
 
+	//  To create a document in the DynamoDB table
+	//      quote is required. The id will be created in the Lambda function
 	function createQuote() {
-		rows.innerHTML = '';            //  empty out the list
 		fetch(apiURL, {
 			method: 'POST',
 			body: JSON.stringify({ quote: quote.value })
 		})
-			.then(() => getQuoteList())
-			.catch(err => console.log('Fetch Error :', err) );
+		.then(() => getQuoteList())
+		.catch(err => console.log('Fetch Error :', err) );
 	}
 
 	//  To delete a document in the DynamoDB table
@@ -96,8 +91,8 @@
 			method: 'DELETE',
 			body: JSON.stringify({ id: id })
 		})
-		.then(response => response.json())
-		.then((resp) => getQuoteList())                       //  refresh the list of documents in the table
+		.then(response => response.json())	//	not needed since we ignore the response
+		.then((resp) => getQuoteList()) 	//  refresh the list of documents in the table
 		.catch(err => console.log('Fetch Error :', err) );
 	}
 
@@ -110,8 +105,8 @@
 			method: 'PUT',
 			body: JSON.stringify({ id: id, quote: quote.value })
 		})
-			.then(() => getQuoteList())                       //  refresh the list of documents in the table
-			.catch(err => console.log('Fetch Error :', err) );
+		.then(() => getQuoteList())                       //  refresh the list of documents in the table
+		.catch(err => console.log('Fetch Error :', err) );
 	}
 </script>
 </html>
